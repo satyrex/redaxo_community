@@ -1,0 +1,20 @@
+# addon: community de_de
+navigation_community = Community
+
+
+com_overview = Übersicht
+com_user_management = User Verwaltung
+com_field_management = Felder anpassen
+
+
+email = E-Mail
+status = Status
+firstname = Vorname
+activation_key = Aktivierungsschlüssel
+session_key = Sessionschlüssel
+
+com_account_inactive = Zugang ist inaktiv
+com_account_requested = Zugang wurde angefragt
+com_account_active = Zugang ist aktiv
+
+com_status = Status
