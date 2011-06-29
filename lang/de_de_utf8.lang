@@ -18,3 +18,6 @@ com_account_requested = Zugang wurde angefragt
 com_account_active = Zugang ist aktiv
 
 com_status = Status
+
+newsletter_last_id = Letzte Kennung des Newsletters
+newsletter = Newsletter

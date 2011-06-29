@@ -3,7 +3,9 @@
 $info = '';
 $warning = '';
 $modules = array(	
-		"login"		=> array(	"key" => "login", "search" => "com_auth_login",		"name" => "rex - com - auth - Login"),
+//		"login"		=> array(		"key" => "login", 			"search" => "module:com_auth_login",			"name" => "com:auth - Login"),
+// 		"pswchange"	=> array(		"key" => "pswchange", 		"search" => "module:com_auth_pswchange",		"name" => "com:auth - Change Password"),
+// 		"profilechange"	=> array(	"key" => "profilechange", 	"search" => "module:com_auth_profilechange",	"name" => "com:auth - Profile"),
 	);
 
 if(rex_request("func","string")=="update")
@@ -66,6 +68,7 @@ $REX[\'ADDON\'][\'community\'][\'plugin_auth\'][\'article_withoutperm\'] = '.$RE
 			echo rex_info($I18N->msg("com_module_installed",$module["name"]));
 			
 		}
+		$info = rex_generateAll();
 	}
 
 }
@@ -104,7 +107,7 @@ zu pflegen, die Registrierung durchzuführen oder ähnliches, wird nicht über d
 
 <p class="rex-tx1">Um die Authentifizierung in der Navigation zu nutzen, sprich, dafür zu Sorgen, dass nur die richtigen Navigationspunkte auftauchen,
 am besten die <b>rex_navigation</b>-Funktion von REDAXO verwenden. Wenn man eigene Navigationen gebaut hat, dann kann man dies prüfen indem man das entsprechende Artikel-Objekt 
-an die Funktion übergibt <b>rex_com_checkperm(&$obj (OOArticle-Objekt))</b></p>
+an die Funktion übergibt <b>rex_com_auth::checkperm(&$obj (OOArticle-Objekt))</b></p>
 
 <p class="rex-tx1">Angemeldet bleiben lässt auch aktivieren, wobei hier beim Formular nur die entsprechende Checkbox hinzugefügrt werden muss. Weiterhin ist/muss in der 
 Userverwaltung das Feld <b>session_key</b> vorhanden sein, in welchem die entsprechende Session gespeichert wird, welche dann in den lokalen Cookies der Browser
@@ -195,14 +198,14 @@ echo '
 					<div class="rex-area-content">
 					';
 
-$link = 'index.php?page=community&subpage=plugin.auth&func=add_module&module=';
 foreach($modules as $module)
 {
 	$gm = rex_sql::factory();
 	$gm->setQuery('select * from rex_module where ausgabe LIKE "%'.mysql_real_escape_string($module["search"]).'%"');
 
+	$link = 'index.php?page=community&subpage=plugin.auth&func=add_module&module='.urlencode($module["key"]);
 	if($gm->getRows() == 1) {
-		echo '* <a href="'.$link.urlencode($module["key"]).'&module_id='.$gm->getValue("id").'">'.$I18N->msg("com_auth_update_module",$module["name"]).'</a><br />';
+		echo '* <a href="'.$link.'&module_id='.$gm->getValue("id").'">'.$I18N->msg("com_auth_update_module",$module["name"]).'</a><br />';
 	}else
 	{
 		echo '* <a href="'.$link.'">'.$I18N->msg("com_auth_install_module",$module["name"]).'</a><br />';

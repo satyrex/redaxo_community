@@ -294,7 +294,7 @@ if (count($info)>0)
 
 	<tr>
 		<td class=rex-icon>&nbsp;</td>
-		<td>NewsletterID:</td>
+		<td>Kennung des Newsletters</td>
 		<td><input type="text" size="30" name="nl_id" value="<?php echo stripslashes(htmlspecialchars($nl_id)); ?>" class="inp100" />
 		 <br />[ wird nur an User geschickt, die diese ID noch nicht gesetzt haben
 		 <br />Diese Newsletter ID wird bei jedem Versand an den entsprechenden User gesetzt ]</td>

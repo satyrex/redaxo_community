@@ -166,10 +166,11 @@ if (
 // save cookie if stay active and sk exists and login worked aut
 if($REX['ADDON']['community']['plugin_auth']['stay_active'] == "1")
 {
-  if($sk == "")
+  if($sk == "") {
     setcookie($cookiekey, "", time() -1 , "/" );  /* verfällt in 14 Tagen */
-  else
+  } else {
     setcookie($cookiekey, $sk, time() + (3600*24*14), "/" );  /* verfällt in 14 Tagen */
+  }
   
   $_COOKIE[$cookiekey] = $sk;
 
@@ -203,7 +204,7 @@ if (
 // ---------- page_permissions
 if($article = OOArticle::getArticleById($REX["ARTICLE_ID"]))
 {
-  if(!rex_com_checkperm($article))
+  if(!rex_com_auth::checkperm($article))
   {
     ob_end_clean();
     header('Location:'.rex_getUrl($REX['ADDON']['community']['plugin_auth']['article_withoutperm'],'',$url_params,'&'));

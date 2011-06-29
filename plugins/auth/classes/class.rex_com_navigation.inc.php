@@ -223,7 +223,7 @@ class rex_com_navigation extends rex_navigation
   
   function _checkPerm($nav,$level)
   {
-    return rex_com_checkperm($nav);
+    return rex_com_auth::checkperm($nav);
   }
   
   

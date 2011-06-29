@@ -13,10 +13,6 @@
   + Felder abgleichen
 */
 
-
-echo "noch nciht fertig";
-exit;
-
 $error = '';
 
 if ($error != '')

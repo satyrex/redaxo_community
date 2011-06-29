@@ -6,23 +6,22 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-include $REX["INCLUDE_PATH"]."/addons/community/plugins/auth/functions/function.rex_com_checkperm.inc.php";
-include $REX["INCLUDE_PATH"]."/addons/community/plugins/auth/functions/function.rex_com_checkpage.inc.php";
-include $REX["INCLUDE_PATH"]."/addons/community/plugins/auth/functions/function.rex_com_auth_urlendecode.inc.php";
 include $REX["INCLUDE_PATH"]."/addons/community/plugins/auth/classes/class.rex_com_navigation.inc.php";
+include $REX["INCLUDE_PATH"]."/addons/community/plugins/auth/classes/class.rex_com_auth.inc.php";
 
 rex_register_extension('REX_NAVI_CLASSNAME', create_function('','return "rex_com_navigation";'));
 
-if (isset($I18N) && is_object($I18N))
+if (isset($I18N) && is_object($I18N)) {
   $I18N->appendFile($REX['INCLUDE_PATH'] . '/addons/community/plugins/auth/lang');
+}
 
 // --- DYN
 $REX['ADDON']['community']['plugin_auth']['auth_active'] = "1";
-$REX['ADDON']['community']['plugin_auth']['stay_active'] = "1";
-$REX['ADDON']['community']['plugin_auth']['article_login_ok'] = 101;
+$REX['ADDON']['community']['plugin_auth']['stay_active'] = "0";
+$REX['ADDON']['community']['plugin_auth']['article_login_ok'] = 1;
 $REX['ADDON']['community']['plugin_auth']['article_login_failed'] = 15;
-$REX['ADDON']['community']['plugin_auth']['article_logout'] = 1;
-$REX['ADDON']['community']['plugin_auth']['article_withoutperm'] = 102;
+$REX['ADDON']['community']['plugin_auth']['article_logout'] = 15;
+$REX['ADDON']['community']['plugin_auth']['article_withoutperm'] = 15;
 // --- /DYN
 
 $REX['ADDON']['community']['plugin_auth']['request'] = array();
@@ -40,18 +39,17 @@ $REX['ADDON']['community']['xform_path']['action'][] = $REX["INCLUDE_PATH"]."/ad
 
 if ($REX["REDAXO"])
 {
-	if ($REX['USER'] && ($REX['USER']->isAdmin() || $REX['USER']->hasPerm("community[auth]")))
+	if ($REX['USER'] && ($REX['USER']->isAdmin() || $REX['USER']->hasPerm("community[auth]"))) {
 		$REX['ADDON']['community']['SUBPAGES'][] = array('plugin.auth','Authentifizierung');
+	}
 
 }elseif($REX['ADDON']['community']['plugin_auth']['auth_active'] == 1)
 {
 
 	// nur im Frontend..
 	rex_register_extension('ADDONS_INCLUDED', create_function('','
-	
 		global $REX,$I18N;
 		include $REX["INCLUDE_PATH"]."/addons/community/plugins/auth/inc/auth.php";
-	
 	'));
 }
 

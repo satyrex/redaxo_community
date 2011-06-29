@@ -29,7 +29,7 @@ if ($REX["REDAXO"] && $REX['USER'])
 	$REX['ADDON'][$mypage]['SUBPAGES'][] = array( '' , $I18N->msg("com_overview"));
 	
 	// if ($REX['USER']->isAdmin() || $REX['USER']->hasPerm("community[users]")) 
-	$REX['ADDON'][$mypage]['SUBPAGES'][] = array ('user' , $I18N->msg('com_user_management'));
+	// $REX['ADDON'][$mypage]['SUBPAGES'][] = array ('user' , $I18N->msg('com_user_management'));
 	
 }
 

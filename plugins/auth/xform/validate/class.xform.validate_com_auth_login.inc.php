@@ -5,10 +5,11 @@ class rex_xform_validate_com_auth_login extends rex_xform_validate_abstract
 
 	function enterObject(&$warning, $send, &$warning_messages)
 	{
-
+		global $REX;
+		
 		$this->params["submit_btn_show"] = FALSE;
 
-		$e = explode(";",$this->elements[2]);
+		$e = explode(",",$this->elements[2]);
 		$s = array();
 		foreach($e as $v)
 		{
@@ -22,7 +23,7 @@ class rex_xform_validate_com_auth_login extends rex_xform_validate_abstract
 				$warning_messages[] = $this->elements[4];
 				return FALSE;
 			}
-			$s[] = '`'.$label.'`="'.$value.'"';
+			$s[] = '`'.$label.'`="'.mysql_real_escape_string($value).'"';
 		}
 		
 		$loginquery = 'select * from rex_com_user where '.implode(" AND ",$s).' and status>0';
@@ -65,6 +66,7 @@ class rex_xform_validate_com_auth_login extends rex_xform_validate_abstract
 
 			$warning[] = 1;
 			$warning_messages[] = $this->elements[4];
+			unset($REX["COM_USER"]);
 		}
 		// exit;
 		return;
@@ -73,7 +75,7 @@ class rex_xform_validate_com_auth_login extends rex_xform_validate_abstract
 	
 	function getDescription()
 	{
-		return "com_auth_login -> prüft ob leer, beispiel: validate|com_auth_login|label1=request1;label2=request2|clearlabel|warning_message ";
+		return "com_auth_login -> prüft ob leer, beispiel: validate|com_auth_login|label1=request1,label2=request2|clearlabel|warning_message ";
 	}
 }
 ?>
