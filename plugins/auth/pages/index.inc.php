@@ -8,6 +8,8 @@ $modules = array(
 // 		"profilechange"	=> array(	"key" => "profilechange", 	"search" => "module:com_auth_profilechange",	"name" => "com:auth - Profile"),
 	);
 
+$xform_user_fields = rex_xform_manager_table::getXFormFieldsByType("rex_com_user","value");
+
 if(rex_request("func","string")=="update")
 {
 
@@ -18,6 +20,11 @@ if(rex_request("func","string")=="update")
 	$REX['ADDON']['community']['plugin_auth']['article_logout'] = rex_request("article_logout","int");;
 	$REX['ADDON']['community']['plugin_auth']['article_withoutperm'] = rex_request("article_withoutperm","int");;
 
+	$REX['ADDON']['community']['plugin_auth']['login_field'] = stripslashes(str_replace('"','',rex_request("login_field","string")));
+	if(!array_key_exists($REX['ADDON']['community']['plugin_auth']['login_field'],$xform_user_fields)) {
+		$REX['ADDON']['community']['plugin_auth']['login_field'] = "login";
+	}
+
 	$config_file = $REX['INCLUDE_PATH'].'/addons/community/plugins/auth/config.inc.php';
 
 	$content = '
@@ -27,6 +34,7 @@ $REX[\'ADDON\'][\'community\'][\'plugin_auth\'][\'article_login_ok\'] = '.$REX['
 $REX[\'ADDON\'][\'community\'][\'plugin_auth\'][\'article_login_failed\'] = '.$REX['ADDON']['community']['plugin_auth']['article_login_failed'].';
 $REX[\'ADDON\'][\'community\'][\'plugin_auth\'][\'article_logout\'] = '.$REX['ADDON']['community']['plugin_auth']['article_logout'].';
 $REX[\'ADDON\'][\'community\'][\'plugin_auth\'][\'article_withoutperm\'] = '.$REX['ADDON']['community']['plugin_auth']['article_withoutperm'].';
+$REX[\'ADDON\'][\'community\'][\'plugin_auth\'][\'login_field\'] = "'.$REX['ADDON']['community']['plugin_auth']['login_field'].'";
 ';
 
 	if(rex_replace_dynamic_contents($config_file, $content) !== false)
@@ -72,6 +80,14 @@ $REX[\'ADDON\'][\'community\'][\'plugin_auth\'][\'article_withoutperm\'] = '.$RE
 	}
 
 }
+
+$sel_userfields = new rex_select();
+$sel_userfields->setName("login_field");
+$sel_userfields->setSize(1);
+foreach($xform_user_fields as $k => $xf) {
+	$sel_userfields->addOption($k,$k);
+}
+$sel_userfields->setSelected($REX['ADDON']['community']['plugin_auth']['login_field']);
 
 echo '
 	<div class="rex-form" id="rex-form-system-setup">
@@ -183,13 +199,20 @@ gespeichert werden.</p>
                     					'. rex_var_link::_getLinkButton('article_withoutperm', 4, stripslashes($REX['ADDON']['community']['plugin_auth']['article_withoutperm'])) .'
 									</p>
 								</div>
+
+								<div class="rex-form-row">
+									<p class="rex-form-col-a rex-form-select">
+										<label for="rex-form-default-template-id">'.$I18N->msg("com_auth_login_field").'</label>
+											'.$sel_userfields->get().'
+									</p>
+								</div>
 							
 								<div class="rex-form-row">
 									<p class="rex-form-col-a rex-form-submit">
 										<input type="submit" class="rex-form-submit" name="sendit" value="'.$I18N->msg("specials_update").'"'. rex_accesskey($I18N->msg('specials_update'), $REX['ACKEY']['SAVE']) .' />
 									</p>
 								</div>
-								
+
 						</fieldset>
 					</div> <!-- Ende rex-area-content //-->';
 

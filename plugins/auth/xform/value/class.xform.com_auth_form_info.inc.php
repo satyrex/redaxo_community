@@ -18,9 +18,11 @@ class rex_xform_com_auth_form_info extends rex_xform_abstract
 		$info = 0;
 	}
     $message = $messages[$info];
+    $class = "form_info";
+    if($info == 2) $class = "form_warning";
     
     if($message != "") {
-      $this->params["form_output"][$this->getId()] = '<p class="formcom_auth_form_info formlabel-'.$this->getName().'" id="'.$this->getHTMLId().'">'.$message.'</p>';
+      $this->params["form_output"][$this->getId()] = '<ul class="formcom_auth_form_info '.$class.' formlabel-'.$this->getName().'" id="'.$this->getHTMLId().'"><li>'.$message.'</li></ul>';
     }
 
     return;

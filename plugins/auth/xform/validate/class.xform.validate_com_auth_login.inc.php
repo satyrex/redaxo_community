@@ -6,9 +6,8 @@ class rex_xform_validate_com_auth_login extends rex_xform_validate_abstract
 	function enterObject(&$warning, $send, &$warning_messages)
 	{
 		global $REX;
-		
-		$this->params["submit_btn_show"] = FALSE;
 
+		$this->params["submit_btn_show"] = FALSE;
 		$e = explode(",",$this->elements[2]);
 		$s = array();
 		foreach($e as $v)
@@ -25,8 +24,16 @@ class rex_xform_validate_com_auth_login extends rex_xform_validate_abstract
 			}
 			$s[] = '`'.$label.'`="'.mysql_real_escape_string($value).'"';
 		}
-		
-		$loginquery = 'select * from rex_com_user where '.implode(" AND ",$s).' and status>0';
+
+		if($this->getElement(3) != "")
+		{
+			$e = explode(",",$this->getElement(3));
+			foreach($e as $v) {
+				$s[] = $v;
+			}
+		}		
+
+		$loginquery = 'select * from rex_com_user where '.implode(" AND ",$s).'';
 
 		if($this->params["debug"]) 
 			echo $loginquery;
@@ -37,7 +44,7 @@ class rex_xform_validate_com_auth_login extends rex_xform_validate_abstract
 		$REX['COM_USER']->setSysID($pagekey);
 		$REX['COM_USER']->setSessiontime(3000);
 		$REX['COM_USER']->setUserID("rex_com_user.id");
-		$REX['COM_USER']->setUserquery("select * from rex_com_user where id='USR_UID' and status>0");
+		$REX['COM_USER']->setUserquery("select * from rex_com_user where id='USR_UID'");
 
 		// Bei normalem Login
 		$REX['COM_USER']->setLogin("11","22"); // quatsch setzen, login gefaked
@@ -46,26 +53,26 @@ class rex_xform_validate_com_auth_login extends rex_xform_validate_abstract
 		if ($REX['COM_USER']->checkLogin())
 		{
 			// Eingeloggt
-			
-			// Clearlabel - for instance. delete activation key. only once available
-			if(isset($this->elements[3]) && $this->elements[3] != "")
+			$fields = $this->getElement(5);
+			if($fields != "")
 			{
-				$clearlabel = $this->elements[3];
-				$u = rex_sql::factory();
-				// $u->debugsql = 1;
-				$u->setTable('rex_com_user');
-				$u->setWhere('id="'.$REX["COM_USER"]->getValue('id').'"');
-				$u->setValue($this->elements[3],'');
-				$u->update();
-			
+				$fields = explode(",",$fields);
+				foreach($fields as $field)
+				{
+					$this->params["value_pool"]["email"][$field] = $REX["COM_USER"]->getValue($field);
+			        if ($this->getElement(6) != "no_db") {
+						$this->params["value_pool"]["sql"][$field] = $REX["COM_USER"]->getValue($field);
+					}
+					
+					echo "<br />".$field." ".$REX["COM_USER"]->getValue($field);
+				}
 			}
 
 		}else
 		{
 			// Nicht eingeloggt
-
 			$warning[] = 1;
-			$warning_messages[] = $this->elements[4];
+			$warning_messages[] = $this->getElement(4);
 			unset($REX["COM_USER"]);
 		}
 		// exit;
@@ -75,7 +82,7 @@ class rex_xform_validate_com_auth_login extends rex_xform_validate_abstract
 	
 	function getDescription()
 	{
-		return "com_auth_login -> prüft ob leer, beispiel: validate|com_auth_login|label1=request1,label2=request2|clearlabel|warning_message ";
+		return "com_auth_login -> prüft ob leer, beispiel: validate|com_auth_login|label1=request1,label2=request2|status>0|warning_message|opt:load_field1,load_field2,load_field3 ";
 	}
 }
 ?>

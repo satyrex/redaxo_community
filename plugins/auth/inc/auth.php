@@ -55,7 +55,7 @@ if (
 
   // Bei normalem Login
   $REX['COM_USER']->setLogin($rex_com_auth_login_name,$rex_com_auth_login_psw);
-  $REX['COM_USER']->setLoginquery("select * from rex_com_user where login='USR_LOGIN' and password='USR_PSW' and status>0");
+  $REX['COM_USER']->setLoginquery('select * from rex_com_user where `'.$REX['ADDON']['community']['plugin_auth']['login_field'].'`="USR_LOGIN" and password="USR_PSW" and status>0');
 
   if ($REX['COM_USER']->checkLogin())
   {

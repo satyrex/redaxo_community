@@ -22,6 +22,7 @@ $REX['ADDON']['community']['plugin_auth']['article_login_ok'] = 1;
 $REX['ADDON']['community']['plugin_auth']['article_login_failed'] = 15;
 $REX['ADDON']['community']['plugin_auth']['article_logout'] = 15;
 $REX['ADDON']['community']['plugin_auth']['article_withoutperm'] = 15;
+$REX['ADDON']['community']['plugin_auth']['login_field'] = "email";
 // --- /DYN
 
 $REX['ADDON']['community']['plugin_auth']['request'] = array();
