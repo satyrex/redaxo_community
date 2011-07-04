@@ -21,7 +21,7 @@ html|<p class="form-required">* Pflichtfelder</p>
 captcha|Bitte geben Sie den entsprechenden Sicherheitscode ein|Falsche Eingabe des Codes
 
 validate|email|email|Bitte geben Sie die E-Mail ein.
-validate|unique|email|Diese E-Mail existiert schon
+validate|unique|email|Diese E-Mail existiert schon|rex_com_user
 validate|empty|email|Bitte geben Sie Ihre e-Mail ein.
 validate|empty|password|Bitte geben Sie ein Passwort ein.
 validate|compare|password|password_2|Bitte geben Sie zweimal das gleiche Passwort ein
