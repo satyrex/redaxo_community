@@ -99,7 +99,6 @@ class rex_com_auth {
 	
 		$delete = TRUE;
 		$delete = rex_register_extension_point("COM_AUTH_USER_DELETE", $delete, $id);
-
 		if(!$delete) { return FALSE; }
 		
 		$id = (int) $id;
@@ -112,10 +111,16 @@ class rex_com_auth {
 	
 	}
 
+	function clearUserSession() {
+		global $REX;
+		unset($REX["COM_USER"]);
+		unset($_SESSION[rex_com_auth::getLoginKey()]);
+		unset($_COOKIE[rex_com_auth::getLoginKey()]);
+	}
 
-
-
-
+	function getLoginKey() {
+		return 'comrex';
+	}
 
 
 }

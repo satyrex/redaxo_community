@@ -6,8 +6,8 @@ global $REX;
 if(!isset($_SESSION))
   @session_start();
 
-$pagekey = 'comrex';
-$cookiekey = 'comrex_auth';
+$login_key = rex_com_auth::getLoginKey();
+
 $sk = ''; // Cookie-Session-Key
 $url_params = array();
 
@@ -24,19 +24,19 @@ $rex_com_auth_info = 0; // 0 - nichts / 1 - logout / 2 - failed login / 3 - logg
 // is rememberme is active, get the cookie - if available
 if($REX['ADDON']['community']['plugin_auth']['stay_active'] == "1")
 {
-  if(isset($_COOKIE[$cookiekey]))
-    $sk = $_COOKIE[$cookiekey];
+  if(isset($_COOKIE[$login_key]))
+    $sk = $_COOKIE[$login_key];
 
 }else
 {
-  unset($_COOKIE[$cookiekey]);
+  unset($_COOKIE[$login_key]);
 }
 
 //var_dump( $_COOKIE);
 
 // ----- the authentifikation
 if (
-  (isset($_SESSION[$pagekey]['UID']) && $_SESSION[$pagekey]['UID'] != "") 
+  (isset($_SESSION[$login_key]['UID']) && $_SESSION[$login_key]['UID'] != "") 
   or (isset($_REQUEST[$REX['ADDON']['community']['plugin_auth']['request']['name']]) and isset($_REQUEST[$REX['ADDON']['community']['plugin_auth']['request']['psw']])) 
   or ($REX['ADDON']['community']['plugin_auth']['stay_active'] == "1" and $sk != '')
 )
@@ -45,7 +45,7 @@ if (
   $rex_com_auth_logout = rex_request("rex_com_auth_logout","int");
   $REX['COM_USER'] = new rex_login();
   $REX['COM_USER']->setSqlDb(1);
-  $REX['COM_USER']->setSysID($pagekey);
+  $REX['COM_USER']->setSysID($login_key);
   $REX['COM_USER']->setSessiontime(7200);
   if ($rex_com_auth_logout == 1) { 
     $REX['COM_USER']->setLogout(true);
@@ -94,7 +94,7 @@ if (
       {
         $sk = '';
         unset($REX['COM_USER']);
-        unset($_COOKIE[$cookiekey]);
+        unset($_COOKIE[$login_key]);
         $url_params = array();
         $url_params['rex_com_auth_logout'] = 1;
         $jump_aid = $REX['ADDON']['community']['plugin_auth']['article_login_failed'];
@@ -111,7 +111,7 @@ if (
         {
           // sessionlogin failed
           unset($REX['COM_USER']);
-          unset($_COOKIE[$cookiekey]);
+          unset($_COOKIE[$login_key]);
           $sk = '';
 
           $rex_com_auth_info = 2; // 0 - nichts / 1 - logout / 2 - failed login / 3 - logged in
@@ -142,7 +142,7 @@ if (
       }
         
       unset($REX['COM_USER']);
-      unset($_COOKIE[$cookiekey]);
+      unset($_COOKIE[$login_key]);
       $sk = '';
       
       $url_params[$REX['ADDON']['community']['plugin_auth']['request']['name']] = $rex_com_auth_login_name;
@@ -159,7 +159,7 @@ if (
   // ----- nicht eingeloggt und kein login
   $REX["COM_LOGIN_MSG"] = '';
   unset($REX['COM_USER']);
-  unset($_COOKIE[$cookiekey]);
+  unset($_COOKIE[$login_key]);
   $sk = '';
 }
 
@@ -167,12 +167,12 @@ if (
 if($REX['ADDON']['community']['plugin_auth']['stay_active'] == "1")
 {
   if($sk == "") {
-    setcookie($cookiekey, "", time() -1 , "/" );  /* verfällt in 14 Tagen */
+    setcookie($login_key, "", time() -1 , "/" );  /* verfällt in 14 Tagen */
   } else {
-    setcookie($cookiekey, $sk, time() + (3600*24*14), "/" );  /* verfällt in 14 Tagen */
+    setcookie($login_key, $sk, time() + (3600*24*14), "/" );  /* verfällt in 14 Tagen */
   }
   
-  $_COOKIE[$cookiekey] = $sk;
+  $_COOKIE[$login_key] = $sk;
 
 }
 

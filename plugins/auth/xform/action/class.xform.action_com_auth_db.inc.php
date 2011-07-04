@@ -21,11 +21,8 @@ class rex_xform_action_com_auth_db extends rex_xform_action_abstract
 
 			}elseif($this->getElement(2) == "delete") {
 
-				while(@ob_end_clean()) {}
 				rex_com_auth::deleteUser($REX["COM_USER"]->getValue("id"));
-				unset($REX["COM_USER"]);
-				header("Location:".rex_getUrl($REX['ADDON']['community']['plugin_auth']['article_logout'])); 
-				exit;
+				rex_com_auth::clearUserSession();
 			
 			}else {
 
