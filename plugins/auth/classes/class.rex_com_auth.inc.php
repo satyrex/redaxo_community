@@ -100,7 +100,7 @@ class rex_com_auth {
 		$delete = TRUE;
 		$delete = rex_register_extension_point("COM_AUTH_USER_DELETE", $delete, $id);
 
-		if(!$return) { return FALSE; }
+		if(!$delete) { return FALSE; }
 		
 		$id = (int) $id;
 		$gu = rex_sql::factory();
