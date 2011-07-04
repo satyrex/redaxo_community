@@ -188,8 +188,7 @@ if($method == "start" && $method_all == "all" && count($error) == 0 && $send)
 {
 		$nl = new rex_sql;
 		// $nl->debugsql = 1;
-		// $nl->setQuery('select * from rex_com_user where newsletter_last_id<>"'.$nl_id.'" and email<>"" and newsletter=1 LIMIT 50');
-		$nl->setQuery('select * from rex_com_user where newsletter_last_id<>"'.$nl_id.'" and email<>"" and newsletter=1 and profile='.$nl_filter_profile.' and status='.$nl_filter_status.' LIMIT 50');
+		$nl->setQuery('select * from rex_com_user where (newsletter_last_id <> "'.$nl_id.'" OR newsletter_last_id IS NULL) and email<>"" and email IS NOT NULL and newsletter=1 and status='.$nl_filter_status.' LIMIT 50');
 		
 		if($nl->getRows()>0)
 		{
@@ -204,7 +203,7 @@ if($method == "start" && $method_all == "all" && count($error) == 0 && $send)
 			foreach($nl->getArray() as $userinfo)
 			{
 				$i .= ", ".$userinfo["email"];
-				$up->setQuery('update rex_com_user set newsletter_last_id="'.$nl_id.'" where id='.$userinfo["id"]);
+				$up->setQuery('update rex_com_user set newsletter_last_id="'.mysql_real_escape_string($nl_id).'" where id='.$userinfo["id"]);
 				$r = rex_newsletter_sendmail($userinfo, $nl_from_email, $nl_from_name, $nl_subject, $nl_body_text, $nl_body_html);
 				$nl->next();	
 			}
