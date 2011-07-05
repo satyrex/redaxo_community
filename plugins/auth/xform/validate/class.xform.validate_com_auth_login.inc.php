@@ -63,8 +63,6 @@ class rex_xform_validate_com_auth_login extends rex_xform_validate_abstract
 			        if ($this->getElement(6) != "no_db") {
 						$this->params["value_pool"]["sql"][$field] = $REX["COM_USER"]->getValue($field);
 					}
-					
-					echo "<br />".$field." ".$REX["COM_USER"]->getValue($field);
 				}
 			}
 
