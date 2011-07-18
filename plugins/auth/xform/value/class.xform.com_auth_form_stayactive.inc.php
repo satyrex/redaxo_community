@@ -18,10 +18,10 @@ class rex_xform_com_auth_form_stayactive extends rex_xform_abstract
 		$sa = rex_request($REX['ADDON']['community']['plugin_auth']['request']['stay'],"int");
 		if($sa == 1) $checked = ' checked="checked"';
 
-		$this->params["form_output"][] .= '
-		<p class="formcheckbox form-com-auth-stayactive formlabel-'.$this->getName().'" id="'.$this->getHTMLId().'">
-			<input type="checkbox" class="checkbox " name="'.$REX['ADDON']['community']['plugin_auth']['request']['stay'].'" id="el_'.$this->getId().'" value="1" '.$checked.' />
-			<label class="checkbox " for="el_'.$this->getId().'" >'.$l_label.'</label>
+		$this->params["form_output"][$this->getId()] .= '
+		<p class="formcheckbox form-com-auth-stayactive '.$this->getHTMLClass().'" id="'.$this->getHTMLId().'">
+			<input type="checkbox" class="checkbox " name="'.$REX['ADDON']['community']['plugin_auth']['request']['stay'].'" id="'.$this->getFieldId().'" value="1" '.$checked.' />
+			<label class="checkbox " for="'.$this->getFieldId().'" >'.$l_label.'</label>
 		</p>
 		';
 
