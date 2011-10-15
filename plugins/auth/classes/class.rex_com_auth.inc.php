@@ -44,11 +44,17 @@ class rex_com_auth {
 				return TRUE;
 			else
 				return FALSE;
+
+
+
 	
 		if($obj->getValue('art_com_permtype') == 1 && (!isset($REX["COM_USER"]) || !is_object($REX["COM_USER"])))
+		{
 			return FALSE;
+		}
 	
 		// ---------- ab hier nur für eingeloggte -> permtype = 1
+
 	
 		// ----- wenn für alle gruppen freigegeben
 		if($obj->getValue('art_com_grouptype') == 0 || $obj->getValue('art_com_grouptype') == "")
@@ -58,7 +64,7 @@ class rex_com_auth {
 		if($obj->getValue('art_com_grouptype') == 1)
 		{
 			$art_groups = explode("|",$obj->getValue('art_com_groups'));
-			$user_groups = explode(",",$REX["COM_USER"]->getValue("group"));
+			$user_groups = explode(",",$REX["COM_USER"]->getValue("rex_com_group"));
 			foreach($art_groups as $ag)
 			{
 				if($ag != "" && !in_array($ag,$user_groups))
@@ -72,7 +78,7 @@ class rex_com_auth {
 		if($obj->getValue('art_com_grouptype') == 2)
 		{
 			$art_groups = explode("|",$obj->getValue('art_com_groups'));
-			$user_groups = explode(",",$REX["COM_USER"]->getValue("group"));
+			$user_groups = explode(",",$REX["COM_USER"]->getValue("rex_com_group"));
 			foreach($art_groups as $ag)
 			{
 				if($ag != "" && in_array($ag,$user_groups))
@@ -85,7 +91,7 @@ class rex_com_auth {
 		// ----- ist in keiner gruppe
 		if($obj->getValue('art_com_grouptype') == 3)
 		{
-			$user_groups = explode(",",$REX["COM_USER"]->getValue("group"));
+			$user_groups = explode(",",$REX["COM_USER"]->getValue("rex_com_group"));
 			if(count($user_groups) == 0)
 				return TRUE;
 		}

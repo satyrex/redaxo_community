@@ -32,7 +32,7 @@ class rex_xform_action_com_auth_db extends rex_xform_action_abstract
 		    	}
 		    
 		    	$sql->setTable("rex_com_user");
-				foreach($this->elements_sql as $key => $value) {
+				foreach($this->params["value_pool"]["sql"] as $key => $value) {
 					$sql->setValue($key, $value);
 				}
 	

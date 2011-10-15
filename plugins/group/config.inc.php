@@ -6,18 +6,7 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-// echo "Dummy Config ist geladen";
-
-
-
-// xform addfield "group" einbauen
-
-
-if ($REX["REDAXO"] && $REX['USER'])
-{
-	if ($REX['USER']->isAdmin() || $REX['USER']->hasPerm("community[group]"))
-		$REX['ADDON']['community']['SUBPAGES'][] = array('plugin.group','Gruppen');
-}
-
+if (isset($I18N) && is_object($I18N))
+  $I18N->appendFile($REX['INCLUDE_PATH'] . '/addons/community/plugins/group/lang');
 
 ?>

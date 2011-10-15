@@ -9,4 +9,6 @@
 $REX['ADDON']['install']['group'] = 0;
 // $REX['ADDON']['installmsg']['group'] = 'Fehler!';
 
+$info = rex_generateAll(); // quasi kill cache ..
+
 ?>

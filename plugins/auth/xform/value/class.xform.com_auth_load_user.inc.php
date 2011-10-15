@@ -3,11 +3,11 @@
 class rex_xform_com_auth_load_user extends rex_xform_abstract
 {
 
-  function enterObject(&$email_elements,&$sql_elements,&$warning,&$form_output,$send = 0)
+  function enterObject()
   {
     global $REX;
 
-	if(isset($REX["COM_USER"]) && !$send)
+	if(isset($REX["COM_USER"]) && !$this->params["send"])
 	{
 		$fields = $this->getElement(2);
 		if($fields != "") {

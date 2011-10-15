@@ -6,21 +6,28 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-if (OOAddon::isAvailable('xform') != 1 || OOAddon::isAvailable('phpmailer') != 1) {
-	$REX['ADDON']['install']['community'] = 0;
-	$REX['ADDON']['installmsg']['community'] = $I18N->msg('community_install_xform_phpmailer_not_activated');
+$I18N->appendFile($REX['INCLUDE_PATH'] . '/addons/community/lang');
 
-}elseif(OOAddon::getVersion('xform') < "2.6") {
-	$REX['ADDON']['install']['community'] = 0;
-	$REX['ADDON']['installmsg']['community'] = $I18N->msg('community_install_xform_version_problem','2.6');
+if($I18N->msg("htmlcharset") != "utf-8") {
 
-}elseif(OOPlugin::getVersion("xform", "manager") < "2.6") {
 	$REX['ADDON']['install']['community'] = 0;
-	$REX['ADDON']['installmsg']['community'] = $I18N->msg('community_install_xform_manager_version_problem','2.6');
+	$REX['ADDON']['installmsg']['community'] = $I18N->msg('community_install_only_utf8');
 
-}elseif(OOPlugin::getVersion("xform", "email") < "2.6") {
+}elseif (OOAddon::isAvailable('phpmailer') != 1 || OOAddon::getVersion('phpmailer') < "2.8") {
 	$REX['ADDON']['install']['community'] = 0;
-	$REX['ADDON']['installmsg']['community'] = $I18N->msg('community_install_xform_email_version_problem','2.6');
+	$REX['ADDON']['installmsg']['community'] = $I18N->msg('community_install_phpmailer_version_problem','2.8');
+
+}elseif(OOAddon::isAvailable('xform') != 1 || OOAddon::getVersion('xform') < "2.8") {
+	$REX['ADDON']['install']['community'] = 0;
+	$REX['ADDON']['installmsg']['community'] = $I18N->msg('community_install_xform_version_problem','2.8');
+
+}elseif(OOPlugin::isAvailable('xform','manager') != 1 || OOPlugin::getVersion("xform", "manager") < "2.8") {
+	$REX['ADDON']['install']['community'] = 0;
+	$REX['ADDON']['installmsg']['community'] = $I18N->msg('community_install_xform_manager_version_problem','2.8');
+
+}elseif(OOPlugin::isAvailable('xform','email') != 1 || OOPlugin::getVersion("xform", "email") < "2.8") {
+	$REX['ADDON']['install']['community'] = 0;
+	$REX['ADDON']['installmsg']['community'] = $I18N->msg('community_install_xform_email_version_problem','2.8');
 
 }else
 {

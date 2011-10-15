@@ -3,12 +3,12 @@
 class rex_xform_validate_com_auth_login extends rex_xform_validate_abstract 
 {
 
-	function enterObject(&$warning, $send, &$warning_messages)
+	function enterObject()
 	{
 		global $REX;
 
 		$this->params["submit_btn_show"] = FALSE;
-		$e = explode(",",$this->elements[2]);
+		$e = explode(",",$this->getElement(2));
 		$s = array();
 		foreach($e as $v)
 		{
@@ -18,8 +18,8 @@ class rex_xform_validate_com_auth_login extends rex_xform_validate_abstract
 
 			if($value == "")
 			{
-				$warning[] = 1;
-				$warning_messages[] = $this->elements[4];
+				$this->params["warning"][] = 1;
+				$this->params["warning_messages"][] = $this->getElement(4);
 				return FALSE;
 			}
 			$s[] = '`'.$label.'`="'.mysql_real_escape_string($value).'"';
@@ -69,8 +69,8 @@ class rex_xform_validate_com_auth_login extends rex_xform_validate_abstract
 		}else
 		{
 			// Nicht eingeloggt
-			$warning[] = 1;
-			$warning_messages[] = $this->getElement(4);
+			$this->params["warning"][] = 1;
+			$this->params["warning_messages"][] = $this->getElement(4);
 			unset($REX["COM_USER"]);
 		}
 		// exit;

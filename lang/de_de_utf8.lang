@@ -6,7 +6,6 @@ com_overview = Übersicht
 com_user_management = User Verwaltung
 com_field_management = Felder anpassen
 
-
 email = E-Mail
 status = Status
 firstname = Vorname
@@ -21,3 +20,9 @@ com_status = Status
 
 newsletter_last_id = Letzte Kennung des Newsletters
 newsletter = Newsletter
+
+community_install_phpmailer_version_problem = Bitte installieren Sie das phpmailer Addon in Version {0} 
+community_install_xform_version_problem = Bitte installieren Sie das XForm Addon in Version {0} 
+community_install_xform_manager_version_problem = Bitte installieren Sie das XForm Manager Plugin in Version {0} 
+community_install_xform_email_version_problem = Bitte installieren Sie das XForm Email Plugin in Version {0} 
+community_install_only_utf8 = Community kann nur installiert werden, wenn der Zeichensatz UTF 8 verwenden wird.

@@ -5,52 +5,44 @@
 class rex_xform_com_user extends rex_xform_abstract
 {
 
-  function enterObject(&$email_elements,&$sql_elements,&$warning,&$form_output,$send = 0)
-  {   
+  function enterObject()
+  {
     global $REX;
 
     $show_label = "email";
     $show_value = "";
-    if(isset($this->elements[6]))
-    {
-      $show_label = $this->elements[6];
-    }
-    
-    $this->value = -1;
-    if (isset($REX["COM_USER"]) && is_object($REX["COM_USER"]))
-    {
-      $this->setValue($REX["COM_USER"]->getValue($this->elements[2]));
+    $show_label = $this->getElement(6);
+
+    $this->setValue(-1);
+    if (isset($REX["COM_USER"]) && is_object($REX["COM_USER"])) {
+      $this->setValue($REX["COM_USER"]->getValue($this->getElement(2)));
       $show_value = $REX["COM_USER"]->getValue($show_label);
     }
 
     $wc = "";
-    if (isset($warning["el_" . $this->getId()]))
-    {
-      $wc = $warning["el_" . $this->getId()];
+    if (isset($this->params["warning"][$this->getId()])) {
+      $wc = $this->params["warning"][$this->getId()];
     }
 
-    if (!isset($this->elements[4]) || trim($this->elements[4]) != "hidden")
+    if (trim($this->getElement(4)) != "hidden")
     {
-      $form_output[] = '
+      $this->params["form_output"][$this->getId()] = '
         <p class="formtext">
-          <label class="text ' . $wc . '" for="el_' . $this->getId() . '" >' . $this->elements[3] . '</label>
-          <input type="text" class="text inp_disabled" disabled="disabled"  id="el_' . $this->id . '" value="'.htmlspecialchars($show_value) . '" />
+          <label class="text ' . $wc . '" for="'.$this->getFieldId().'" >' . $this->getElement(3) . '</label>
+          <input type="text" class="text inp_disabled" disabled="disabled"  id="'.$this->getFieldId().'" value="'.htmlspecialchars($show_value) . '" />
         </p>';
     }
-    
-    $email_elements[$this->getLabel()] = stripslashes($this->value);
-    if (!isset($this->elements[5]) || $this->elements[5] != "no_db")
-    {
-      $sql_elements[$this->getLabel()] = $this->value;
-    }
-    
+
+    $this->params["value_pool"]["email"][$this->getLabel()] = stripslashes($this->getValue());
+    if ($this->getElement(5) != "no_db") { $this->params["value_pool"]["sql"][$this->getLabel()] = $this->getValue(); }
+
   }
-  
+
   function getDescription()
   {
     return "com_user -> Beispiel: com_user|label|dbfield|Fieldlabel|hidden|[no_db]|showlabel";
   }
-  
+
 }
 
 ?>

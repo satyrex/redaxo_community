@@ -6,7 +6,6 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-
 $error = '';
 
 // --- metainfo
@@ -40,9 +39,14 @@ $info = rex_generateAll(); // quasi kill cache ..
 
 $REX['ADDON']['install']['auth'] = 1;
 if($error != "") {
+
 	$REX['ADDON']['install']['auth'] = 0;
 	$REX['ADDON']['installmsg']['auth'] = $error;
-}
+	
+}else
+{
 
+
+}
 
 ?>

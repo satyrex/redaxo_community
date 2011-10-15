@@ -19,9 +19,9 @@ if (isset($I18N) && is_object($I18N)) {
 $REX['ADDON']['community']['plugin_auth']['auth_active'] = "1";
 $REX['ADDON']['community']['plugin_auth']['stay_active'] = "0";
 $REX['ADDON']['community']['plugin_auth']['article_login_ok'] = 1;
-$REX['ADDON']['community']['plugin_auth']['article_login_failed'] = 15;
-$REX['ADDON']['community']['plugin_auth']['article_logout'] = 15;
-$REX['ADDON']['community']['plugin_auth']['article_withoutperm'] = 15;
+$REX['ADDON']['community']['plugin_auth']['article_login_failed'] = 12;
+$REX['ADDON']['community']['plugin_auth']['article_logout'] = 1;
+$REX['ADDON']['community']['plugin_auth']['article_withoutperm'] = 16;
 $REX['ADDON']['community']['plugin_auth']['login_field'] = "email";
 // --- /DYN
 
