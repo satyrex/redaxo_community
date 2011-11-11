@@ -72,6 +72,7 @@ class rex_com_auth {
 					return FALSE;
 				}
 			}
+			return TRUE;
 		}
 		
 		// ----- muss nur in einer gruppe sein
